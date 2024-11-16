@@ -31,7 +31,13 @@
       {:status 200
        :body response}
       {:status 404
-       :body {:error "Symbols not found"}})))
+       :body {:error "Stocks not found"}})))
+
+(defn get-symbols!
+  [_]
+  (let [response (controllers.stock/fetch-symbols)]
+    {:status 200
+     :body response}))
 
 (def default-routes
   #{["/api/version"
@@ -50,6 +56,12 @@
      :get (conj [(interceptors.adapt/externalize {200 [wire.out.stock/Stock]})
                  interceptors.adapt/content-type-edn]
                 get-stocks!)
+     :route-name :get-stock-list]
+
+    ["/api/symbols"
+     :get (conj [(interceptors.adapt/externalize {200 [s/Str]})
+                 interceptors.adapt/content-type-edn]
+                get-symbols!)
      :route-name :get-symbols]})
 
 (def routes

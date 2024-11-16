@@ -10,3 +10,7 @@
 (s/defn get-by-stock! :- models.stock/StockInformations
   [symbol :- s/Str]
   (services.stock/fetch-stock-data symbol))
+
+(s/defn fetch-symbols :- [s/Str]
+  []
+  (services.stock/fetch-symbols))
