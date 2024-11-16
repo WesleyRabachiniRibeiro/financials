@@ -1,10 +1,12 @@
 (ns financials.controllers.stock
-  (:require [financials.services.stock :as services.stock]))
+  (:require [financials.services.stock :as services.stock]
+            [financials.models.stock :as models.stock]
+            [schema.core :as s]))
 
-(defn get-symbols
+(s/defn get-stocks :- [models.stock/Stock]
   []
-  (services.stock/fetch-symbols))
+  (services.stock/fetch-stocks))
 
-(defn get-by-stock!
-  [symbol]
+(s/defn get-by-stock! :- models.stock/StockInformations
+  [symbol :- s/Str]
   (services.stock/fetch-stock-data symbol))

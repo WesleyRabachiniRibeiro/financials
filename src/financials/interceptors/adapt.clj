@@ -39,13 +39,10 @@
                   (assoc context :response {:status 400
                                             :body   "Invalid Query Params"}))))}))
 
-(def content-type-json
+(def content-type-edn
   (i/interceptor
-    {:name  :json
+    {:name  :edn
      :leave (fn [context]
-              (let [response (:response context)
-                    body (:body response)
-                    json-body (json/write-str body)]
-                (->> (assoc response :headers {"Content-Type" "application/json"}
-                                     :body json-body)
+              (let [response (:response context)]
+                (->> (assoc response :headers {"Content-Type" "application/edn"})
                      (assoc context :response))))}))
